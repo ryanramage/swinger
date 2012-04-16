@@ -209,10 +209,11 @@
     save: function(callback) {
       var self = this;
       this.attributes.updated_at = timestamp();
-
-      // a temp bug fix. for some reason
-      var uuid = $.couch.newUUID();
-      this.attributes._id = uuid;
+      if (!this.attributes._id) {
+          // a temp bug fix. for some reason
+          var uuid = $.couch.newUUID();
+          this.attributes._id = uuid;
+      }
 
       this.database.saveDoc(this.attributes, Preso.mergeCallbacks({
         success: function(resp) {
