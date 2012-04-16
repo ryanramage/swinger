@@ -14,8 +14,10 @@
     return this
   };
 
-  var dbname = window.location.pathname.split('/')[1] || 'swinger',
-      db     = $.couch.db(dbname),
+
+  jQuery.couch.urlPrefix = '.';
+
+  var db = $.couch.db('_db'),
       default_slide_scale = {width: 1280, height: 650},
       window_dimensions;
 
@@ -118,40 +120,6 @@
       } else {
         callback(user._current_user);
       }
-    },
-    login: function(name, password, callback) {
-      $.couch.login({
-        name : name,
-        password : password,
-        success: function() {
-          User.current(callback, true);
-        },
-        error: function(code, error, reason) {
-          showNotification('error', reason);
-        }
-      });
-    },
-    logout: function(callback) {
-      var user = this;
-      $.couch.logout({
-        success: function() {
-          user._current_user = false;
-          callback();
-        },
-        error: function(code, error, reason) {
-          showNotification('error', reason);
-        }
-      });
-    },
-    signup: function(name, email, password, callback) {
-      $.couch.signup({name: name, email: email}, password, {
-        success: function() {
-          User.login(name, password, callback);
-        },
-        error: function(code, error, reason) {
-          showNotification('error', reason);
-        }
-      })
     }
   };
 
@@ -241,6 +209,11 @@
     save: function(callback) {
       var self = this;
       this.attributes.updated_at = timestamp();
+
+      // a temp bug fix. for some reason
+      var uuid = $.couch.newUUID();
+      this.attributes._id = uuid;
+
       this.database.saveDoc(this.attributes, Preso.mergeCallbacks({
         success: function(resp) {
           Sammy.log('preso.save', self, resp);
@@ -483,10 +456,10 @@
         return User.isLoggedIn() && User._current_user.name == username;
       },
       showNav: function() {
-        $('.nav, .user-nav, #footer').show().find('.preso-links').hide();
+        $('.nav, .user-nav, #footer, #dashboard-topbar').show().find('.preso-links').hide();
       },
       hideNav: function() {
-        $('.nav, .user-nav, #footer').hide();
+        $('.nav, .user-nav, #footer, #dashboard-topbar').hide();
       },
       withCurrentPreso: function(callback) {
         var context = this;
@@ -566,7 +539,7 @@
       if (!User.isLoggedIn()) {
        showNotification('error', 'Sorry, please login or signup to create a presentation.');
        this.app.last_location_before_redirect = this.path;
-       this.redirect('#/login');
+       //this.redirect('#/login');
        return false;
       }
     });

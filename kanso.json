@@ -1,0 +1,26 @@
+{
+    "name": "swinger",
+    "version": "0.0.1",
+    "description": "Create and show presentations",
+    "long_description": "",
+    "url": "https://github.com/ryanramage/swinger",
+    "categories": ["productivity", "presentation"],
+    "attachments": ["static", "index.html"],
+    "icons": {
+        "16": "static/icons/wiki_icon_16.png",
+        "48": "static/icons/wiki_icon_48.png",
+        "96": "static/icons/wiki_icon_96.png",
+        "128": "static/icons/wiki_icon_128.png"
+    },
+    "promo_images": {
+        "small": "static/images/promo_small.png"
+    },
+    "screenshots": [
+        "static/images/screenshot1.png",
+        "static/images/screenshot2.png",
+        "static/images/screenshot3.png"
+    ],
+    "dependencies": {
+        "traditional-couchapp": null
+    }
+}

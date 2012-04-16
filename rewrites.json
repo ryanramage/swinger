@@ -26,5 +26,9 @@
   {
     "from":"/templates/*",
     "to":"templates/*"
-  }
+  },
+  {"from": "/_session", "to": "../../../_session"},
+  {"from": "/_uuids", "to": "../../../_uuids"},
+  {"from": "/_db/*", "to": "../../*" },
+  {"from": "/_db", "to": "../.." }
 ]

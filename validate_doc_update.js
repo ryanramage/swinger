@@ -1,6 +1,17 @@
 function(newDoc, oldDoc, userCtx) {
 
-  // !code lib/validate.js
+    function forbidden(message) {
+      throw({forbidden : message});
+    };
+
+    function unauthorized(message) {
+      throw({unauthorized : message});
+    };
+
+    function require(beTrue, message) {
+      if (!beTrue) forbidden(message);
+    };
+
 
   var is_admin = userCtx.roles.indexOf('_admin') != -1
 
